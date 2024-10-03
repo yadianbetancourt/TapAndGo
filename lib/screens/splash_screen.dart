@@ -42,15 +42,9 @@ class _SplashScreenState extends State<SplashScreen>
           controller: _pageViewController,
           onPageChanged: _handlePageViewChanged,
           children: const <Widget>[
-            Center(
-              child: FirstSplash(),
-            ),
-            Center(
-              child: SecondSplash(),
-            ),
-            Center(
-              child: ThirdSplash(),
-            ),
+            FirstSplash(),
+            SecondSplash(),
+            ThirdSplash()
           ],
         ),
         PageIndicator(

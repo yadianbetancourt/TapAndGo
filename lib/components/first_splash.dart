@@ -14,50 +14,52 @@ class FirstSplashState extends State<FirstSplash> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFFeaf9f1),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
+      body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Lottie.asset('assets/lottie/first.json'),
             Padding(
-              padding: const EdgeInsets.only(left: 20.0, right: 20.0),
+              padding: const EdgeInsets.all(8.0),
+              child: Lottie.asset('assets/lottie/first.json'),
+            ),
+            SizedBox(
+              width: MediaQuery.of(context).size.width / 2,
               child: Column(
                 children: [
-                Align(
-                alignment: Alignment.centerLeft,
-                child: SizedBox(
-                  width: 200.0,
-                  child: Text('Welcome to ChatConnect!',
-                    style: GoogleFonts.montserrat(
-                      fontSize: 20,
-                      fontStyle: FontStyle.normal,
-                      fontWeight: FontWeight.w500,
-                      color: const Color(0xFF1f2e3b),
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: SizedBox(
+                      width: 200.0,
+                      child: Text('Welcome to ChatConnect!',
+                        style: GoogleFonts.montserrat(
+                          fontSize: 20,
+                          fontStyle: FontStyle.normal,
+                          fontWeight: FontWeight.w500,
+                          color: const Color(0xFF1f2e3b),
+                        ),
+                      ),
                     ),
                   ),
-                ),
-                ),
-                const SizedBox(height: 8.0),
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                      'Dive into endless conversations with people from around the world. Meet new friends, share experiences, and enjoy spontaneous interactions. Ready to chat?',
-                      style: GoogleFonts.montserrat(
-                        fontSize: 14,
-                        fontStyle: FontStyle.normal,
-                        fontWeight: FontWeight.w500,
-                        color: const Color(0xFF171717),
-                      ),
-                      textAlign: TextAlign.justify
+                  const SizedBox(height: 8.0),
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                        'Dive into endless conversations with people from around the world. Meet new friends, share experiences, and enjoy spontaneous interactions. Ready to chat?',
+                        style: GoogleFonts.montserrat(
+                          fontSize: 14,
+                          fontStyle: FontStyle.normal,
+                          fontWeight: FontWeight.w500,
+                          color: const Color(0xFF171717),
+                        ),
+                        textAlign: TextAlign.justify
+                    ),
                   ),
-                ),
                 ],
               ),
             )
           ],
         ),
-      ),
+      )
     );
   }
 }

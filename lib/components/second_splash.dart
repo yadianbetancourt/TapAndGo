@@ -14,17 +14,16 @@ class SecondSplashState extends State<SecondSplash> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFFFFFFFF),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
+      body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Padding(
-              padding: const EdgeInsets.all(20.0),
+              padding: const EdgeInsets.all(8.0),
               child: Lottie.asset('assets/lottie/second.json'),
             ),
-            Padding(
-              padding: const EdgeInsets.only(left: 20.0, right: 20.0),
+            SizedBox(
+              width: MediaQuery.of(context).size.width / 2,
               child: Column(
                 children: [
                   Align(
@@ -60,7 +59,7 @@ class SecondSplashState extends State<SecondSplash> {
             )
           ],
         ),
-      ),
+      )
     );
   }
 }

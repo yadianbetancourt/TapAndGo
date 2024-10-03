@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:tap_and_go/screens/home_screen.dart';
+import 'package:tap_and_go/screens/board_screen.dart';
 
 class ThirdSplash extends StatefulWidget {
   const ThirdSplash({super.key});
@@ -15,7 +15,7 @@ class ThirdSplash extends StatefulWidget {
 class ThirdSplashState extends State<ThirdSplash> {
   void _setFirstLaunch() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setBool('isFirstLaunch', true);
+    await prefs.setBool('isFirstLaunch', false);
     if (kDebugMode) {
       print('First launch done');
     }
@@ -25,14 +25,16 @@ class ThirdSplashState extends State<ThirdSplash> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFFFFFFFF),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
+      body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Lottie.asset('assets/lottie/third.json'),
             Padding(
-              padding: const EdgeInsets.only(left: 20.0, right: 20.0),
+              padding: const EdgeInsets.all(8.0),
+              child: Lottie.asset('assets/lottie/third.json'),
+            ),
+            SizedBox(
+              width: MediaQuery.of(context).size.width / 2,
               child: Column(
                 children: [
                   Align(
@@ -81,7 +83,7 @@ class ThirdSplashState extends State<ThirdSplash> {
                           Navigator.of(context).push(
                             MaterialPageRoute<void>(
                               builder: (BuildContext context) {
-                                return const HomeScreen();
+                                return const BoardScreen();
                               },
                             ),
                           );
@@ -103,7 +105,7 @@ class ThirdSplashState extends State<ThirdSplash> {
             )
           ],
         ),
-      ),
+      )
     );
   }
 }
