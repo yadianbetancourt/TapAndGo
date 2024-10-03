@@ -1,158 +1,94 @@
-import 'package:flutter/foundation.dart';
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
-
-import '../components/first_splash.dart';
-import '../components/second_splash.dart';
-import '../components/third_splash.dart';
+import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:tap_and_go/screens/welcome_screen.dart';
 
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 
   @override
-  State<SplashScreen> createState() => _SplashScreenState();
+  SplashScreenState createState() => SplashScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen>
-    with TickerProviderStateMixin {
-  late PageController _pageViewController;
-  late TabController _tabController;
-  int _currentPageIndex = 0;
+class SplashScreenState extends State<SplashScreen>
+    with SingleTickerProviderStateMixin {
+  double opacity = 0.0;
 
   @override
   void initState() {
     super.initState();
-    _pageViewController = PageController();
-    _tabController = TabController(length: 3, vsync: this);
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
+    fadeIn();
+    Future.delayed(const Duration(seconds: 4), () {
+      if (!context.mounted) return;
+      Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (context) => const WelcomeScreen()));
+    });
   }
 
   @override
   void dispose() {
     super.dispose();
-    _pageViewController.dispose();
-    _tabController.dispose();
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
+        overlays: SystemUiOverlay.values);
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Stack(
-      alignment: Alignment.bottomCenter,
-      children: <Widget>[
-        PageView(
-          controller: _pageViewController,
-          onPageChanged: _handlePageViewChanged,
-          children: const <Widget>[
-            FirstSplash(),
-            SecondSplash(),
-            ThirdSplash()
-          ],
-        ),
-        PageIndicator(
-          tabController: _tabController,
-          currentPageIndex: _currentPageIndex,
-          onUpdateCurrentPageIndex: _updateCurrentPageIndex,
-          isOnDesktopAndWeb: _isOnDesktopAndWeb,
-        ),
-      ],
-    );
-  }
-
-  void _handlePageViewChanged(int currentPageIndex) {
-    if (!_isOnDesktopAndWeb) {
-      return;
-    }
-    _tabController.index = currentPageIndex;
-    setState(() {
-      _currentPageIndex = currentPageIndex;
+  void fadeIn() {
+    Future.delayed(const Duration(milliseconds: 500), () {
+      setState(() {
+        opacity = 1.0;
+      });
     });
   }
 
-  void _updateCurrentPageIndex(int index) {
-    _tabController.index = index;
-    _pageViewController.animateToPage(
-      index,
-      duration: const Duration(milliseconds: 400),
-      curve: Curves.easeInOut,
-    );
-  }
-
-  bool get _isOnDesktopAndWeb {
-    if (kIsWeb) {
-      return true;
-    }
-    switch (defaultTargetPlatform) {
-      case TargetPlatform.macOS:
-      case TargetPlatform.linux:
-      case TargetPlatform.windows:
-        return true;
-      case TargetPlatform.android:
-      case TargetPlatform.iOS:
-      case TargetPlatform.fuchsia:
-        return true;
-    }
-  }
-}
-
-class PageIndicator extends StatelessWidget {
-  const PageIndicator({
-    super.key,
-    required this.tabController,
-    required this.currentPageIndex,
-    required this.onUpdateCurrentPageIndex,
-    required this.isOnDesktopAndWeb,
-  });
-
-  final int currentPageIndex;
-  final TabController tabController;
-  final void Function(int) onUpdateCurrentPageIndex;
-  final bool isOnDesktopAndWeb;
-
   @override
   Widget build(BuildContext context) {
-    if (!isOnDesktopAndWeb) {
-      return const SizedBox.shrink();
-    }
-
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          IconButton(
-            splashRadius: 16.0,
-            padding: EdgeInsets.zero,
-            onPressed: () {
-              if (currentPageIndex == 0) {
-                return;
-              }
-              onUpdateCurrentPageIndex(currentPageIndex - 1);
-            },
-            icon: const Icon(
-              Icons.arrow_left_rounded,
-              size: 32.0,
-            ),
-          ),
-          TabPageSelector(
-            controller: tabController,
-            color: Colors.transparent,
-            selectedColor: Colors.black,
-          ),
-          IconButton(
-            splashRadius: 16.0,
-            padding: EdgeInsets.zero,
-            onPressed: () {
-              if (currentPageIndex == 2) {
-                return;
-              }
-              onUpdateCurrentPageIndex(currentPageIndex + 1);
-            },
-            icon: const Icon(
-              Icons.arrow_right_rounded,
-              size: 32.0,
-            ),
-          ),
-        ],
+    return Scaffold(
+        body: Container(
+      decoration: const BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topRight,
+          end: Alignment.bottomLeft,
+          colors: <Color>[
+            Color(0xFF25a978),
+            Color(0xFF5bc4e2),
+            Color(0xFF3561a8),
+            Color(0xFFe04661),
+            Color(0xFFf58435),
+            Color(0xFFffba3b),
+          ],
+        ),
       ),
-    );
+      child: AnimatedOpacity(
+        opacity: opacity,
+        duration: const Duration(seconds: 2),
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              const Image(
+                  width: 200,
+                  height: 200,
+                  image: AssetImage('assets/images/rounded_icon.png')),
+              const SizedBox(height: 20),
+              AnimatedTextKit(
+                animatedTexts: [
+                  TyperAnimatedText('TapAndGo!',
+                      textStyle: GoogleFonts.montserrat(
+                          color: Colors.white,
+                          fontSize: 40,
+                          fontStyle: FontStyle.normal,
+                          fontWeight: FontWeight.w700),
+                      speed: const Duration(milliseconds: 200))
+                ],
+                totalRepeatCount: 1,
+              ),
+            ],
+          ),
+        ),
+      ),
+    ));
   }
 }
