@@ -4,7 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../screens/board_screen.dart';
+import '../screens/home_screen.dart';
 
 class WelcomeComponent extends StatefulWidget {
   const WelcomeComponent(
@@ -92,10 +92,10 @@ class WelcomeComponentState extends State<WelcomeComponent> {
                           ),
                           onPressed: () async {
                             _setFirstLaunch();
-                            Navigator.of(context).push(
+                            Navigator.of(context).pushReplacement(
                               MaterialPageRoute<void>(
                                 builder: (BuildContext context) {
-                                  return const BoardScreen();
+                                  return const HomeScreen();
                                 },
                               ),
                             );
