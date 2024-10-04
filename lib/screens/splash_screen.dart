@@ -2,8 +2,10 @@ import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tap_and_go/screens/welcome_screen.dart';
 
+import 'home_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -14,6 +16,8 @@ class SplashScreen extends StatefulWidget {
 
 class SplashScreenState extends State<SplashScreen>
     with SingleTickerProviderStateMixin {
+  late bool isFirstLaunch;
+  late Widget redirectTo;
   double opacity = 0.0;
 
   @override
@@ -21,10 +25,12 @@ class SplashScreenState extends State<SplashScreen>
     super.initState();
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
     fadeIn();
+    checkFirstLaunch();
+
     Future.delayed(const Duration(seconds: 4), () {
       if (!context.mounted) return;
-      Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (context) => const WelcomeScreen()));
+      Navigator.of(context)
+          .pushReplacement(MaterialPageRoute(builder: (context) => redirectTo));
     });
   }
 
@@ -41,6 +47,13 @@ class SplashScreenState extends State<SplashScreen>
         opacity = 1.0;
       });
     });
+  }
+
+  void checkFirstLaunch() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    isFirstLaunch = prefs.getBool('first_launch') ?? true;
+    redirectTo = isFirstLaunch ? const WelcomeScreen() : const HomeScreen();
+    //TODO : if running on iPhone redirect to WelcomeScreen or TerminalScreen
   }
 
   @override

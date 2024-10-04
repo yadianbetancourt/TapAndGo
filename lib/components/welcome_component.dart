@@ -26,9 +26,9 @@ class WelcomeComponent extends StatefulWidget {
 
 class WelcomeComponentState extends State<WelcomeComponent> {
 
-  void _setFirstLaunch() async {
+  void setFirstLaunch() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setBool('isFirstLaunch', true);
+    await prefs.setBool('first_launch', false);
   }
 
   @override
@@ -90,7 +90,7 @@ class WelcomeComponentState extends State<WelcomeComponent> {
                                 horizontal: 24, vertical: 12),
                           ),
                           onPressed: () async {
-                            _setFirstLaunch();
+                            setFirstLaunch();
                             Navigator.of(context).pushReplacement(
                               MaterialPageRoute<void>(
                                 builder: (BuildContext context) {

@@ -1,30 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:tap_and_go/screens/home_screen.dart';
-import 'package:tap_and_go/screens/welcome_screen.dart';
+import 'package:tap_and_go/screens/splash_screen.dart';
 
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  bool isFirstLaunch = prefs.getBool('isFirstLaunch') ?? false;
-  runApp(TapAndGoApp(isFirstLaunch: isFirstLaunch));
+  runApp(const TapAndGoApp());
 }
 
 class TapAndGoApp extends StatelessWidget {
-  const TapAndGoApp({super.key, required this.isFirstLaunch});
-  final bool isFirstLaunch;
+  const TapAndGoApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    Widget redirectTo = isFirstLaunch ? const HomeScreen() : const WelcomeScreen();
-    //TODO : if running on iPhone redirect to SplashScreen or TerminalScreen
 
-    return MaterialApp(
+    return const MaterialApp(
       title: 'TapAndGo!',
       // theme: TapAndGoTheme.lightTheme,
       // darkTheme: TapAndGoTheme.darkTheme,
-      home: redirectTo,
+      home: SplashScreen(),
     );
   }
 }
