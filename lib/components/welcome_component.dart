@@ -29,10 +29,7 @@ class WelcomeComponentState extends State<WelcomeComponent> {
 
   void _setFirstLaunch() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setBool('isFirstLaunch', false);
-    if (kDebugMode) {
-      print('First launch done');
-    }
+    await prefs.setBool('isFirstLaunch', true);
   }
 
   @override
