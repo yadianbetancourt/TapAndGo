@@ -17,7 +17,7 @@ class TapAndGoApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Widget redirectTo = isFirstLaunch ? const SplashScreen() : const HomeScreen();
+    Widget redirectTo = isFirstLaunch ? const HomeScreen() : const SplashScreen();
     //TODO : if running on iPhone redirect to SplashScreen or TerminalScreen
 
     return MaterialApp(
