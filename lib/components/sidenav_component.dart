@@ -95,9 +95,17 @@ class SideNavComponentState extends State<SideNavComponent> {
           ListTile(
             title: Row(
               children: [
-                const Icon(
-                  Icons.auto_graph_rounded,
-                  color: Color(0xFFafa1a1),
+                Container(
+                  padding: const EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFFFFFFF),
+                    shape: BoxShape.rectangle,
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                  child: const Icon(
+                    Icons.auto_graph_rounded,
+                    color: Color(0xFFafa1a1),
+                  ),
                 ),
                 const SizedBox(width: 10),
                 Text(
@@ -118,9 +126,17 @@ class SideNavComponentState extends State<SideNavComponent> {
           ListTile(
             title: Row(
               children: [
-                const Icon(
-                  Icons.receipt_long_outlined,
-                  color: Color(0xFFafa1a1),
+                Container(
+                  padding: const EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFFFFFFF),
+                    shape: BoxShape.rectangle,
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                  child: const Icon(
+                    Icons.receipt_long_outlined,
+                    color: Color(0xFFafa1a1),
+                  ),
                 ),
                 const SizedBox(width: 10),
                 Text(
