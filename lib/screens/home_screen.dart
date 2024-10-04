@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:lottie/lottie.dart';
+import 'package:material_symbols_icons/symbols.dart';
 import 'package:tap_and_go/components/appbar_component.dart';
+import 'package:tap_and_go/components/category_component.dart';
 import 'package:tap_and_go/components/sidenav_component.dart';
 
 import '../components/order_component.dart';
@@ -91,6 +94,32 @@ class HomeScreenState extends State<HomeScreen> {
                       ],
                     ),
                   ),
+                  const Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      CategoryComponent(icon: Symbols.restaurant, title: 'All Menu', subtitle: '110 Items'),
+                      CategoryComponent(icon: Symbols.bakery_dining, title: 'Breakfast', subtitle: '20 Items'),
+                      CategoryComponent(icon: Symbols.lunch_dining, title: 'Lunch', subtitle: '20 Items'),
+                      CategoryComponent(icon: Symbols.ramen_dining, title: 'Diner', subtitle: '20 Items'),
+                      CategoryComponent(icon: Symbols.icecream, title: 'Dessert', subtitle: '20 Items'),
+                    ],
+                  ),
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: Padding(
+                      padding: const EdgeInsets.all(20.0),
+                      child: Text(
+                        'All Menu',
+                        style: GoogleFonts.montserrat(
+                          fontSize: 24,
+                          fontStyle: FontStyle.normal,
+                          fontWeight: FontWeight.w500,
+                          color: const Color(0xFF000000),
+                        ),
+                      ),
+                    ),
+                  ),
+                  const Text('menu_here'),
                 ],
               ),
             ),
