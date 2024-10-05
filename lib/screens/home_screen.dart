@@ -235,7 +235,7 @@ class HomeScreenState extends State<HomeScreen> {
                   Align(
                     alignment: Alignment.centerLeft,
                     child: Padding(
-                      padding: const EdgeInsets.all(20.0),
+                      padding: const EdgeInsets.all(8.0),
                       child: Text(
                         'All Menu',
                         style: GoogleFonts.montserrat(
@@ -247,8 +247,6 @@ class HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                   ),
-
-                  // GridView here
                   Expanded(
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
