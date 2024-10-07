@@ -32,7 +32,7 @@ class AppBarComponentState extends State<AppBarComponent> {
       child: Row(
         children: [
           Container(
-            padding: const EdgeInsets.all(10),
+            padding: const EdgeInsets.all(5),
             decoration: const BoxDecoration(
               color: Color(0xFFFFFFFF),
               shape: BoxShape.circle,

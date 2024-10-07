@@ -126,6 +126,7 @@ class HomeScreenState extends State<HomeScreen> {
         price: 4.00,
         imagePath: "assets/images/placeholder.png"),
   ];
+  bool showFilters = false;
 
   @override
   Widget build(BuildContext context) {
@@ -185,7 +186,11 @@ class HomeScreenState extends State<HomeScreen> {
                           ),
                         ),
                         IconButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            setState(() {
+                              showFilters = !showFilters;
+                            });
+                          },
                           icon: const Icon(
                             Icons.filter_alt_rounded,
                             color: Color(0xFFededed),
@@ -207,6 +212,7 @@ class HomeScreenState extends State<HomeScreen> {
                       ],
                     ),
                   ),
+                  if(showFilters)
                   const Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
