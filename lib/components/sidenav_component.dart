@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../screens/stats_screen.dart';
+
 class SideNavComponent extends StatefulWidget {
   const SideNavComponent({super.key});
 
@@ -120,7 +122,12 @@ class SideNavComponentState extends State<SideNavComponent> {
               ],
             ),
             onTap: () {
-              Navigator.pop(context);
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const StatsScreen(),
+                ),
+              );
             },
           ),
           ListTile(
