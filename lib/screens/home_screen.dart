@@ -147,7 +147,7 @@ class HomeScreenState extends State<HomeScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         SizedBox(
-                          width: 800,
+                          width: 700,
                           child: TextField(
                             style: GoogleFonts.montserrat(
                                 fontSize: 16,
