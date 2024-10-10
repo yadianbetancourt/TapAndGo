@@ -15,7 +15,7 @@ class AppBarComponentState extends State<AppBarComponent> {
         (Set<WidgetState> states) {
       if (states.contains(WidgetState.selected)) {
         return const Icon(
-          Icons.delete_rounded,
+          Icons.power_settings_new_outlined,
           color: Color(0xFFFFFFFF),
         );
       }

@@ -142,7 +142,7 @@ class HomeScreenState extends State<HomeScreen> {
                 children: <Widget>[
                   const AppBarComponent(),
                   Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.all(10.0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -212,36 +212,39 @@ class HomeScreenState extends State<HomeScreen> {
                       ],
                     ),
                   ),
-                  if(showFilters)
-                  const Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      CategoryComponent(
-                          icon: Symbols.restaurant,
-                          title: 'All Menu',
-                          subtitle: '110 Items'),
-                      CategoryComponent(
-                          icon: Symbols.bakery_dining,
-                          title: 'Breakfast',
-                          subtitle: '20 Items'),
-                      CategoryComponent(
-                          icon: Symbols.lunch_dining,
-                          title: 'Lunch',
-                          subtitle: '20 Items'),
-                      CategoryComponent(
-                          icon: Symbols.ramen_dining,
-                          title: 'Diner',
-                          subtitle: '20 Items'),
-                      CategoryComponent(
-                          icon: Symbols.icecream,
-                          title: 'Dessert',
-                          subtitle: '20 Items'),
-                    ],
-                  ),
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
+                  if (showFilters)
+                    const Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        CategoryComponent(
+                            icon: Symbols.restaurant,
+                            title: 'All Menu',
+                            subtitle: '110 Items'),
+                        CategoryComponent(
+                            icon: Symbols.bakery_dining,
+                            title: 'Breakfast',
+                            subtitle: '20 Items'),
+                        CategoryComponent(
+                            icon: Symbols.lunch_dining,
+                            title: 'Lunch',
+                            subtitle: '20 Items'),
+                        CategoryComponent(
+                            icon: Symbols.ramen_dining,
+                            title: 'Diner',
+                            subtitle: '20 Items'),
+                        CategoryComponent(
+                            icon: Symbols.icecream,
+                            title: 'Dessert',
+                            subtitle: '20 Items'),
+                      ],
+                    ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 10.0,
+                      vertical: showFilters ? 10.0 : 0.0,
+                    ),
+                    child: Align(
+                      alignment: Alignment.centerLeft,
                       child: Text(
                         'All Menu',
                         style: GoogleFonts.montserrat(
@@ -255,9 +258,10 @@ class HomeScreenState extends State<HomeScreen> {
                   ),
                   Expanded(
                     child: Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.symmetric(horizontal: 10.0),
                       child: GridView.builder(
-                        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 3, // 3 columns
                           crossAxisSpacing: 10.0, // Space between columns
                           mainAxisSpacing: 10.0, // Space between rows
@@ -265,7 +269,7 @@ class HomeScreenState extends State<HomeScreen> {
                         ),
                         itemCount: items.length, // Total number of products
                         itemBuilder: (context, index) {
-                          return ItemCard(item: items[index]);
+                          return ItemCardComponent(item: items[index]);
                         },
                       ),
                     ),
