@@ -3,6 +3,12 @@ import 'package:dotted_separator/dotted_separator.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:material_symbols_icons/material_symbols_icons.dart';
+import 'package:provider/provider.dart';
+import 'package:tap_and_go/components/ordered_item_component.dart';
+import 'package:tap_and_go/components/payment_method_component.dart';
+
+import '../models/item.dart';
+import '../providers/cart_provider.dart';
 
 class OrderComponent extends StatefulWidget {
   const OrderComponent({super.key});
@@ -33,9 +39,58 @@ const List<String> paymentMethods = <String>[
   'CashApp',
   'Stripe'
 ];
+final List<Item> testedItems = [
+  // Breakfast items
+  Item(
+      name: "Buttermilk Croissant",
+      category: "Breakfast",
+      price: 4.00,
+      imagePath: "assets/images/placeholder.png"),
+  Item(
+      name: "Pancake Stack",
+      category: "Breakfast",
+      price: 5.00,
+      imagePath: "assets/images/placeholder.png"),
+
+  // Lunch items
+  Item(
+      name: "Beef Burger",
+      category: "Lunch",
+      price: 9.25,
+      imagePath: "assets/images/placeholder.png"),
+  Item(
+      name: "Fish Tacos",
+      category: "Lunch",
+      price: 8.00,
+      imagePath: "assets/images/placeholder.png"),
+
+  // Dinner items
+  Item(
+      name: "Chicken Alfredo",
+      category: "Dinner",
+      price: 13.50,
+      imagePath: "assets/images/placeholder.png"),
+  Item(
+      name: "Lamb Chops",
+      category: "Dinner",
+      price: 19.00,
+      imagePath: "assets/images/placeholder.png"),
+
+  // Dessert items
+  Item(
+      name: "Macaron Selection",
+      category: "Dessert",
+      price: 4.50,
+      imagePath: "assets/images/placeholder.png"),
+  Item(
+      name: "Fruit Tart",
+      category: "Dessert",
+      price: 4.00,
+      imagePath: "assets/images/placeholder.png"),
+];
+
 
 class OrderComponentState extends State<OrderComponent> {
-  List<String> orderItems = [];
   double subtotal = 0;
   double discount = 0;
   double tps = 0.05;
@@ -53,13 +108,13 @@ class OrderComponentState extends State<OrderComponent> {
     super.initState();
     provincialTax = subtotal * tps;
     federalTax = subtotal * tvq;
-    federalTax = double.parse(federalTax.toStringAsFixed(2));
     total = subtotal - discount + (subtotal * tps) + (subtotal * tvq);
   }
 
   @override
   Widget build(BuildContext context) {
     final double componentWidth = MediaQuery.of(context).size.width / 3;
+    final cartProvider = Provider.of<CartProvider>(context);
 
     return Container(
       width: componentWidth,
@@ -245,41 +300,36 @@ class OrderComponentState extends State<OrderComponent> {
             ],
           ),
           Expanded(
+            child: SingleChildScrollView(
+              scrollDirection: Axis.vertical,
               child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              orderItems.isEmpty
-                  ? Text('No items in order',
+                children: [
+                  if (cartProvider.itemsInCart.isEmpty)
+                    Text(
+                      'No items in order',
                       style: GoogleFonts.montserrat(
-                          fontSize: 16,
-                          fontStyle: FontStyle.normal,
-                          fontWeight: FontWeight.w400,
-                          color: const Color(0xFF7b7b7b)))
-                  : ListView.builder(
-                      itemCount: orderItems.length,
-                      itemBuilder: (context, index) {
-                        return ListTile(
-                          title: Text(orderItems[index],
-                              style: GoogleFonts.montserrat(
-                                  fontSize: 16,
-                                  fontStyle: FontStyle.normal,
-                                  fontWeight: FontWeight.w400,
-                                  color: const Color(0xFF000000))),
-                          trailing: IconButton(
-                            onPressed: () {
-                              setState(() {
-                                orderItems.removeAt(index);
-                              });
-                            },
-                            icon: const Icon(
-                              Symbols.delete,
-                              color: Color(0xFF000000),
-                            ),
-                          ),
-                        );
-                      })
-            ],
-          )),
+                        fontSize: 16,
+                        fontStyle: FontStyle.normal,
+                        fontWeight: FontWeight.w400,
+                        color: const Color(0xFF7b7b7b),
+                      ),
+                    )
+                  else
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.6,
+                      child: ListView.builder(
+                        itemCount: cartProvider.itemsInCart.length,
+                        itemBuilder: (context, index) {
+                          return OrderedItemComponent(
+                            item: cartProvider.itemsInCart[index],
+                          );
+                        },
+                      ),
+                    ),
+                ],
+              ),
+            ),
+          ),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Column(
@@ -293,7 +343,7 @@ class OrderComponentState extends State<OrderComponent> {
                             fontStyle: FontStyle.normal,
                             fontWeight: FontWeight.w400,
                             color: const Color(0xFF000000))),
-                    Text('\$$subtotal',
+                    Text('\$${cartProvider.subtotal.toStringAsFixed(2)}',
                         style: GoogleFonts.montserrat(
                             fontSize: 14,
                             fontStyle: FontStyle.normal,
@@ -309,13 +359,13 @@ class OrderComponentState extends State<OrderComponent> {
                             fontSize: 10,
                             fontStyle: FontStyle.normal,
                             fontWeight: FontWeight.w400,
-                            color: const Color(0xFF7b7b7b))),
-                    Text('\$$discount',
+                            color: const Color(0xFF25a978))),
+                    Text('\$${cartProvider.discount.toStringAsFixed(2)}',
                         style: GoogleFonts.montserrat(
                             fontSize: 10,
                             fontStyle: FontStyle.normal,
                             fontWeight: FontWeight.w400,
-                            color: const Color(0xFF7b7b7b))),
+                            color: const Color(0xFF25a978))),
                   ],
                 ),
                 Row(
@@ -327,7 +377,7 @@ class OrderComponentState extends State<OrderComponent> {
                             fontStyle: FontStyle.normal,
                             fontWeight: FontWeight.w400,
                             color: const Color(0xFF7b7b7b))),
-                    Text('\$$provincialTax',
+                    Text('\$${cartProvider.provincialTax.toStringAsFixed(2)}',
                         style: GoogleFonts.montserrat(
                             fontSize: 10,
                             fontStyle: FontStyle.normal,
@@ -344,7 +394,7 @@ class OrderComponentState extends State<OrderComponent> {
                             fontStyle: FontStyle.normal,
                             fontWeight: FontWeight.w400,
                             color: const Color(0xFF7b7b7b))),
-                    Text('\$$federalTax',
+                    Text('\$${cartProvider.federalTax.toStringAsFixed(2)}',
                         style: GoogleFonts.montserrat(
                             fontSize: 10,
                             fontStyle: FontStyle.normal,
@@ -366,7 +416,7 @@ class OrderComponentState extends State<OrderComponent> {
                             fontStyle: FontStyle.normal,
                             fontWeight: FontWeight.w500,
                             color: const Color(0xFF000000))),
-                    Text('\$$total',
+                    Text('\$${cartProvider.total.toStringAsFixed(2)}',
                         style: GoogleFonts.montserrat(
                             fontSize: 16,
                             fontStyle: FontStyle.normal,
@@ -380,7 +430,7 @@ class OrderComponentState extends State<OrderComponent> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       SizedBox(
-                        width: componentWidth / 2.2,
+                        width: componentWidth / 1.5,
                         height: 40,
                         child: TextField(
                           style: GoogleFonts.montserrat(
@@ -400,20 +450,9 @@ class OrderComponentState extends State<OrderComponent> {
                                 fontStyle: FontStyle.normal,
                                 fontWeight: FontWeight.w400,
                                 color: const Color(0xFF7b7b7b)),
-                            suffixIcon: Container(
-                              padding: const EdgeInsets.all(2),
-                              child: IconButton(
-                                onPressed: () {},
-                                style: ButtonStyle(
-                                  backgroundColor:
-                                      WidgetStateProperty.all<Color>(
-                                          const Color(0xFFFFFFFF)),
-                                ),
-                                icon: const Icon(
-                                  Symbols.sell,
-                                  color: Color(0xFF000000),
-                                ),
-                              ),
+                            suffixIcon: const Icon(
+                              Symbols.sell,
+                              color: Color(0xFF000000),
                             ),
                             contentPadding: const EdgeInsets.symmetric(
                                 vertical: 5, horizontal: 20),
@@ -421,68 +460,32 @@ class OrderComponentState extends State<OrderComponent> {
                         ),
                       ),
                       SizedBox(
-                        width: componentWidth / 2,
+                        width: 100,
                         height: 40,
-                        child: DropdownMenu<String>(
-                          initialSelection: paymentMethods.first,
-                          trailingIcon: const Visibility(
-                            visible: false,
-                            child: Icon(
-                              Symbols.money_bag,
-                              color: Color(0xFF000000),
-                            ),
+                        child: ElevatedButton(
+                          onPressed: () {},
+                          style: ButtonStyle(
+                            backgroundColor: WidgetStateProperty.all<Color>(
+                                const Color(0xFF3561a8)),
+                            padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
+                                const EdgeInsets.all(10)),
+                            shape: WidgetStateProperty.all<OutlinedBorder>(
+                                RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30),
+                            )),
                           ),
-                          selectedTrailingIcon: const Visibility(
-                            visible: false,
-                            child: Icon(
-                              Symbols.money_bag,
-                              color: Color(0xFF000000),
-                            ),
-                          ),
-                          textStyle: GoogleFonts.montserrat(
-                              fontSize: 12,
-                              fontStyle: FontStyle.normal,
-                              fontWeight: FontWeight.w400,
-                              color: const Color(0xFF000000)),
-                          inputDecorationTheme: InputDecorationTheme(
-                            filled: true,
-                            fillColor: const Color(0xFFfafafa),
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(30),
-                                borderSide:
-                                    const BorderSide(color: Color(0xFF000000))),
-                            contentPadding: const EdgeInsets.symmetric(
-                                vertical: 0, horizontal: 20),
-                          ),
-                          menuStyle: const MenuStyle(
-                            backgroundColor: WidgetStatePropertyAll(
-                              Color(0xFFFFFFFF),
-                            ),
-                          ),
-                          expandedInsets: const EdgeInsets.all(0),
-                          onSelected: (String? value) {
-                            setState(() {
-                              selectedPaymentMethod = value!;
-                            });
-                          },
-                          dropdownMenuEntries: paymentMethods
-                              .map<DropdownMenuEntry<String>>((String value) {
-                            return DropdownMenuEntry<String>(
-                              value: value,
-                              label: value,
-                              labelWidget: Text(value,
-                                  style: GoogleFonts.montserrat(
-                                      fontSize: 12,
-                                      fontStyle: FontStyle.normal,
-                                      fontWeight: FontWeight.w400,
-                                      color: const Color(0xFF000000))),
-                            );
-                          }).toList(),
+                          child: Text('Apply',
+                              style: GoogleFonts.montserrat(
+                                  fontSize: 16,
+                                  fontStyle: FontStyle.normal,
+                                  fontWeight: FontWeight.w400,
+                                  color: const Color(0xFFFFFFFF))),
                         ),
                       ),
                     ],
                   ),
                 ),
+                const PaymentMethodComponent(),
               ],
             ),
           ),

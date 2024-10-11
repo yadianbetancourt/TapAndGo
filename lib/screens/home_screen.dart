@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:material_symbols_icons/symbols.dart';
+import 'package:provider/provider.dart';
 import 'package:tap_and_go/components/appbar_component.dart';
 import 'package:tap_and_go/components/category_component.dart';
 import 'package:tap_and_go/components/sidenav_component.dart';
@@ -8,6 +9,7 @@ import 'package:tap_and_go/components/sidenav_component.dart';
 import '../components/item_card_component.dart';
 import '../components/order_component.dart';
 import '../models/item.dart';
+import '../providers/cart_provider.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -18,17 +20,39 @@ class HomeScreen extends StatefulWidget {
 
 class HomeScreenState extends State<HomeScreen> {
   final List<Item> items = [
-    // Breakfast items
+    // Mixed items
     Item(
         name: "Buttermilk Croissant",
         category: "Breakfast",
         price: 4.00,
-        imagePath: "assets/images/placeholder.png"),
+        imagePath: "assets/images/Buttermilk Croissant.png"),
+    Item(
+        name: "Classic Club Sandwich",
+        category: "Lunch",
+        price: 8.50,
+        imagePath: "assets/images/Classic Club Sandwich.png"),
+    Item(
+        name: "Grilled Salmon",
+        category: "Dinner",
+        price: 15.50,
+        imagePath: "assets/images/Grilled Salmon.png"),
+    Item(
+        name: "Cheesy Cheesecake",
+        category: "Dessert",
+        price: 3.75,
+        imagePath: "assets/images/Cheesy Cheesecake.png"),
     Item(
         name: "Cereal Cream Donut",
         category: "Breakfast",
         price: 2.45,
-        imagePath: "assets/images/placeholder.png"),
+        imagePath: "assets/images/Cereal Cream Donut.png"),
+    Item(
+        name: "Grilled Chicken Wrap",
+        category: "Lunch",
+        price: 7.50,
+        imagePath: "assets/images/Grilled Chicken Wrap.png"),
+
+    // Breakfast items
     Item(
         name: "Egg and Cheese Muffin",
         category: "Breakfast",
@@ -47,16 +71,6 @@ class HomeScreenState extends State<HomeScreen> {
 
     // Lunch items
     Item(
-        name: "Classic Club Sandwich",
-        category: "Lunch",
-        price: 8.50,
-        imagePath: "assets/images/placeholder.png"),
-    Item(
-        name: "Grilled Chicken Wrap",
-        category: "Lunch",
-        price: 7.50,
-        imagePath: "assets/images/placeholder.png"),
-    Item(
         name: "Caesar Salad",
         category: "Lunch",
         price: 6.00,
@@ -73,11 +87,6 @@ class HomeScreenState extends State<HomeScreen> {
         imagePath: "assets/images/placeholder.png"),
 
     // Dinner items
-    Item(
-        name: "Grilled Salmon",
-        category: "Dinner",
-        price: 15.50,
-        imagePath: "assets/images/placeholder.png"),
     Item(
         name: "Steak Frites",
         category: "Dinner",
@@ -100,11 +109,6 @@ class HomeScreenState extends State<HomeScreen> {
         imagePath: "assets/images/placeholder.png"),
 
     // Dessert items
-    Item(
-        name: "Cheesy Cheesecake",
-        category: "Dessert",
-        price: 3.75,
-        imagePath: "assets/images/placeholder.png"),
     Item(
         name: "Chocolate Lava Cake",
         category: "Dessert",
@@ -152,7 +156,7 @@ class HomeScreenState extends State<HomeScreen> {
                             style: GoogleFonts.montserrat(
                                 fontSize: 16,
                                 fontStyle: FontStyle.normal,
-                                fontWeight: FontWeight.w500,
+                                fontWeight: FontWeight.w400,
                                 color: const Color(0xFF000000)),
                             decoration: InputDecoration(
                               filled: true,
@@ -168,7 +172,7 @@ class HomeScreenState extends State<HomeScreen> {
                               labelStyle: GoogleFonts.montserrat(
                                   fontSize: 16,
                                   fontStyle: FontStyle.normal,
-                                  fontWeight: FontWeight.w500,
+                                  fontWeight: FontWeight.w400,
                                   color: const Color(0xFF797978)),
                               suffixIcon: IconButton(
                                 onPressed: () {},
@@ -262,14 +266,19 @@ class HomeScreenState extends State<HomeScreen> {
                       child: GridView.builder(
                         gridDelegate:
                             const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 3, // 3 columns
-                          crossAxisSpacing: 10.0, // Space between columns
-                          mainAxisSpacing: 10.0, // Space between rows
-                          childAspectRatio: 0.75, // Adjust for grid item size
+                          crossAxisCount: 3,
+                          crossAxisSpacing: 10.0,
+                          mainAxisSpacing: 10.0,
+                          childAspectRatio: 0.75,
                         ),
-                        itemCount: items.length, // Total number of products
+                        itemCount: items.length,
                         itemBuilder: (context, index) {
-                          return ItemCardComponent(item: items[index]);
+                          return GestureDetector(
+                              onTap: () {
+                                Provider.of<CartProvider>(context, listen: false).addItemToCart(items[index]);
+                              },
+                              child: ItemCardComponent(item: items[index])
+                          );
                         },
                       ),
                     ),

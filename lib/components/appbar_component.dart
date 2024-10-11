@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
+
+import '../providers/cart_provider.dart';
 
 class AppBarComponent extends StatefulWidget {
   const AppBarComponent({super.key});
@@ -15,7 +18,7 @@ class AppBarComponentState extends State<AppBarComponent> {
         (Set<WidgetState> states) {
       if (states.contains(WidgetState.selected)) {
         return const Icon(
-          Icons.power_settings_new_outlined,
+          Icons.delete_rounded,
           color: Color(0xFFFFFFFF),
         );
       }
@@ -26,6 +29,8 @@ class AppBarComponentState extends State<AppBarComponent> {
 
   @override
   Widget build(BuildContext context) {
+    final cartProvider = Provider.of<CartProvider>(context);
+
     return Container(
       color: const Color(0xFFf2f4f7),
       padding: const EdgeInsets.only(left: 10, top: 30, right: 10, bottom: 10),
@@ -120,12 +125,22 @@ class AppBarComponentState extends State<AppBarComponent> {
             scale: 1.5,
             child: Switch(
               thumbIcon: _thumbIcon,
-              activeColor: const Color(0xFFe04661),
+              activeColor: const Color(0xffe04661),
+              inactiveThumbColor: const Color(0xff25a978),
+              inactiveTrackColor: const Color(0x3325a978),
+              trackOutlineColor: deleteOrder ? const WidgetStatePropertyAll(Color(0x33e04661)) : const WidgetStatePropertyAll(Color(0x3325a978)),
               value: deleteOrder,
               onChanged: (bool value) {
                 setState(() {
                   deleteOrder = value;
                 });
+
+                if (deleteOrder) {
+                  cartProvider.itemsInCart.clear();
+                  Future.delayed(const Duration(milliseconds: 500), () {
+                    deleteOrder = false;
+                  });
+                }
               },
             ),
           ),
