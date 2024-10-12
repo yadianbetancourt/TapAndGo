@@ -1,8 +1,10 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tap_and_go/screens/terminal_screen.dart';
 import 'package:tap_and_go/screens/welcome_screen.dart';
 
 import 'home_screen.dart';
@@ -25,7 +27,7 @@ class SplashScreenState extends State<SplashScreen>
     super.initState();
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
     fadeIn();
-    checkFirstLaunch();
+    defineRedirect();
 
     Future.delayed(const Duration(seconds: 4), () {
       if (!context.mounted) return;
@@ -49,11 +51,26 @@ class SplashScreenState extends State<SplashScreen>
     });
   }
 
-  void checkFirstLaunch() async {
+  void defineRedirect() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     isFirstLaunch = prefs.getBool('first_launch') ?? true;
-    redirectTo = isFirstLaunch ? const WelcomeScreen() : const HomeScreen();
-    //TODO : if running on iPhone redirect to WelcomeScreen or TerminalScreen
+
+    if(isFirstLaunch){
+      setState(() {
+        redirectTo = const WelcomeScreen();
+      });
+    } else {
+      DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+      IosDeviceInfo info = await deviceInfo.iosInfo;
+      if (info.model.toLowerCase().contains("ipad")) {
+        setState(() {
+          redirectTo = const HomeScreen();
+        });
+      }
+      setState(() {
+        redirectTo = const TerminalScreen();
+      });
+    }
   }
 
   @override

@@ -1,9 +1,11 @@
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../screens/home_screen.dart';
+import '../screens/terminal_screen.dart';
 
 class WelcomeComponent extends StatefulWidget {
   const WelcomeComponent(
@@ -25,10 +27,24 @@ class WelcomeComponent extends StatefulWidget {
 }
 
 class WelcomeComponentState extends State<WelcomeComponent> {
+  late Widget redirectTo;
 
   void setFirstLaunch() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setBool('first_launch', false);
+  }
+
+  void defineRedirect() async {
+    DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+    IosDeviceInfo info = await deviceInfo.iosInfo;
+    if (info.model.toLowerCase().contains("ipad")) {
+      setState(() {
+        redirectTo = const HomeScreen();
+      });
+    }
+    setState(() {
+      redirectTo = const TerminalScreen();
+    });
   }
 
   @override
@@ -91,10 +107,11 @@ class WelcomeComponentState extends State<WelcomeComponent> {
                           ),
                           onPressed: () async {
                             setFirstLaunch();
+                            defineRedirect();
                             Navigator.of(context).pushReplacement(
                               MaterialPageRoute<void>(
                                 builder: (BuildContext context) {
-                                  return const HomeScreen();
+                                  return redirectTo;
                                 },
                               ),
                             );

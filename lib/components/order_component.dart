@@ -91,14 +91,6 @@ final List<Item> testedItems = [
 
 
 class OrderComponentState extends State<OrderComponent> {
-  double subtotal = 0;
-  double discount = 0;
-  double tps = 0.05;
-  double tvq = 0.09975;
-  double provincialTax = 0;
-  double federalTax = 0;
-  double total = 0;
-
   String selectedOrderType = orderType.first;
   String selectedTable = tables.first;
   String selectedPaymentMethod = paymentMethods.first;
@@ -106,9 +98,6 @@ class OrderComponentState extends State<OrderComponent> {
   @override
   void initState() {
     super.initState();
-    provincialTax = subtotal * tps;
-    federalTax = subtotal * tvq;
-    total = subtotal - discount + (subtotal * tps) + (subtotal * tvq);
   }
 
   @override
