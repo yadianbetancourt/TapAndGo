@@ -4,10 +4,11 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
 import 'package:material_symbols_icons/symbols.dart';
 import 'package:provider/provider.dart';
-import 'package:tap_and_go/components/item_terminal.dart';
+import 'package:tap_and_go/components/list_tile_item_terminal.dart';
 import 'package:tap_and_go/screens/payment_screen.dart';
 
 
+import '../models/item.dart';
 import '../providers/cart_provider.dart';
 
 class TerminalScreen extends StatefulWidget {
@@ -19,6 +20,117 @@ class TerminalScreen extends StatefulWidget {
 
 class TerminalScreenState extends State<TerminalScreen> {
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
+  final List<Item> testedItems = [
+    // Mixed items
+    Item(
+        name: "Buttermilk Croissant",
+        category: "Breakfast",
+        price: 4.00,
+        imagePath: "assets/images/Buttermilk Croissant.png"),
+    Item(
+        name: "Classic Club Sandwich",
+        category: "Lunch",
+        price: 8.50,
+        imagePath: "assets/images/Classic Club Sandwich.png"),
+    Item(
+        name: "Grilled Salmon",
+        category: "Dinner",
+        price: 15.50,
+        imagePath: "assets/images/Grilled Salmon.png"),
+    Item(
+        name: "Cheesy Cheesecake",
+        category: "Dessert",
+        price: 3.75,
+        imagePath: "assets/images/Cheesy Cheesecake.png"),
+    Item(
+        name: "Cereal Cream Donut",
+        category: "Breakfast",
+        price: 2.45,
+        imagePath: "assets/images/Cereal Cream Donut.png"),
+    Item(
+        name: "Grilled Chicken Wrap",
+        category: "Lunch",
+        price: 7.50,
+        imagePath: "assets/images/Grilled Chicken Wrap.png"),
+
+    // Breakfast items
+    Item(
+        name: "Egg and Cheese Muffin",
+        category: "Breakfast",
+        price: 3.75,
+        imagePath: "assets/images/placeholder.png"),
+    Item(
+        name: "Pancake Stack",
+        category: "Breakfast",
+        price: 5.00,
+        imagePath: "assets/images/placeholder.png"),
+    Item(
+        name: "Avocado Toast",
+        category: "Breakfast",
+        price: 6.25,
+        imagePath: "assets/images/placeholder.png"),
+
+    // Lunch items
+    Item(
+        name: "Caesar Salad",
+        category: "Lunch",
+        price: 6.00,
+        imagePath: "assets/images/placeholder.png"),
+    Item(
+        name: "Beef Burger",
+        category: "Lunch",
+        price: 9.25,
+        imagePath: "assets/images/placeholder.png"),
+    Item(
+        name: "Fish Tacos",
+        category: "Lunch",
+        price: 8.00,
+        imagePath: "assets/images/placeholder.png"),
+
+    // Dinner items
+    Item(
+        name: "Steak Frites",
+        category: "Dinner",
+        price: 18.75,
+        imagePath: "assets/images/placeholder.png"),
+    Item(
+        name: "Pasta Carbonara",
+        category: "Dinner",
+        price: 14.50,
+        imagePath: "assets/images/placeholder.png"),
+    Item(
+        name: "Chicken Alfredo",
+        category: "Dinner",
+        price: 13.50,
+        imagePath: "assets/images/placeholder.png"),
+    Item(
+        name: "Lamb Chops",
+        category: "Dinner",
+        price: 19.00,
+        imagePath: "assets/images/placeholder.png"),
+
+    // Dessert items
+    Item(
+        name: "Chocolate Lava Cake",
+        category: "Dessert",
+        price: 5.00,
+        imagePath: "assets/images/placeholder.png"),
+    Item(
+        name: "Egg Tart",
+        category: "Dessert",
+        price: 3.25,
+        imagePath: "assets/images/placeholder.png"),
+    Item(
+        name: "Macaron Selection",
+        category: "Dessert",
+        price: 4.50,
+        imagePath: "assets/images/placeholder.png"),
+    Item(
+        name: "Fruit Tart",
+        category: "Dessert",
+        price: 4.00,
+        imagePath: "assets/images/placeholder.png"),
+  ];
 
   @override
   void initState() {
@@ -105,7 +217,7 @@ class TerminalScreenState extends State<TerminalScreen> {
                     fontStyle: FontStyle.normal,
                     fontWeight: FontWeight.w500,
                     color: const Color(0xFF000000))),
-            if (cartProvider.itemsInCart.isEmpty)
+            if (testedItems.isEmpty)
               Lottie.asset('assets/lottie/hey.json', height: 300)
             else
               Expanded(
@@ -116,10 +228,10 @@ class TerminalScreenState extends State<TerminalScreen> {
                       SizedBox(
                         height: MediaQuery.of(context).size.height * 0.6,
                         child: ListView.builder(
-                          itemCount: cartProvider.itemsInCart.length,
+                          itemCount: testedItems.length,
                           itemBuilder: (context, index) {
                             return ListTileItemComponent(
-                                item: cartProvider.itemsInCart[index]);
+                                item: testedItems[index]);
                           },
                         ),
                       ),
