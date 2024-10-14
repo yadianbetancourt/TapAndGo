@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dotted_line/dotted_line.dart';
 import 'package:dotted_separator/dotted_separator.dart';
 import 'package:flutter/material.dart';
@@ -89,16 +90,12 @@ final List<Item> testedItems = [
       imagePath: "assets/images/placeholder.png"),
 ];
 
-
 class OrderComponentState extends State<OrderComponent> {
+  final FirebaseFirestore firestore = FirebaseFirestore.instance;
+
   String selectedOrderType = orderType.first;
   String selectedTable = tables.first;
   String selectedPaymentMethod = paymentMethods.first;
-
-  @override
-  void initState() {
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -456,8 +453,9 @@ class OrderComponentState extends State<OrderComponent> {
                           style: ButtonStyle(
                             backgroundColor: WidgetStateProperty.all<Color>(
                                 const Color(0xFF3561a8)),
-                            padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
-                                const EdgeInsets.all(10)),
+                            padding:
+                                WidgetStateProperty.all<EdgeInsetsGeometry>(
+                                    const EdgeInsets.all(10)),
                             shape: WidgetStateProperty.all<OutlinedBorder>(
                                 RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(30),
@@ -482,7 +480,12 @@ class OrderComponentState extends State<OrderComponent> {
             width: 400,
             height: 50,
             child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () async {
+                  // Signal iPhone to redirect to PayScreen by updating Firestore
+                  await firestore.collection('devices').doc('iPhone').set({
+                    'redirectTo': 'PayScreen',
+                  }, SetOptions(merge: true));
+                },
                 style: ButtonStyle(
                   backgroundColor:
                       WidgetStateProperty.all<Color>(const Color(0xFF3561a8)),
