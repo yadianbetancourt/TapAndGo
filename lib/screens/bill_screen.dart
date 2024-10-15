@@ -3,6 +3,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:material_symbols_icons/symbols.dart';
 import 'package:provider/provider.dart';
+import 'package:pdf/pdf.dart';
+import 'package:pdf/widgets.dart' as pw;
 
 import '../models/item.dart';
 import '../providers/cart_provider.dart';
@@ -64,6 +66,17 @@ class BillScreenState extends State<BillScreen> {
         price: 4.00,
         imagePath: "assets/images/placeholder.png"),
   ];
+  final pdf = pw.Document();
+
+  void printReceipt() {
+    pdf.addPage(pw.Page(
+        pageFormat: PdfPageFormat.a4,
+        build: (pw.Context context) {
+          return pw.Center(
+            child: pw.Text("Hello World"),
+          ); // Center
+        })); //
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -533,7 +546,9 @@ class BillScreenState extends State<BillScreen> {
                 width: 160,
                 height: 40,
                 child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      printReceipt();
+                    },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xFFFFFFFF),
                       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),

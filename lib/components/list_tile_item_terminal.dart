@@ -20,71 +20,56 @@ class ListTileItemComponentState extends State<ListTileItemComponent> {
   Widget build(BuildContext context) {
 
     return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Container(
-        width: MediaQuery.of(context).size.width,
-        padding: const EdgeInsets.symmetric(horizontal: 10),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
+      padding: const EdgeInsets.all(10.0),
+      child: Row(
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
+            ClipRRect(
+              borderRadius: BorderRadius.circular(10.0),
+              child: Image.asset(
+                widget.item.imagePath,
+                width: 80,
+                height: 80,
+                fit: BoxFit.cover,
+              ),
+            ),
+            const SizedBox(width: 10),
+            Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(10.0),
-                  child: Image.asset(
-                    widget.item.imagePath,
-                    width: 80,
-                    height: 80,
-                    fit: BoxFit.cover,
+                Text(
+                  widget.item.name,
+                  style: GoogleFonts.montserrat(
+                    fontSize: 12,
+                    fontStyle: FontStyle.normal,
+                    fontWeight: FontWeight.w300,
+                    color: const Color(0xFF000000),
                   ),
                 ),
-                const SizedBox(width: 10),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      widget.item.name,
-                      style: GoogleFonts.montserrat(
-                        fontSize: 12,
-                        fontStyle: FontStyle.normal,
-                        fontWeight: FontWeight.w300,
-                        color: const Color(0xFF000000),
-                      ),
-                    ),
-                    Text(
-                      '\$${widget.item.price.toStringAsFixed(2)}',
-                      textAlign: TextAlign.left,
-                      style: GoogleFonts.montserrat(
-                        fontSize: 12,
-                        fontStyle: FontStyle.normal,
-                        fontWeight: FontWeight.w400,
-                        color: const Color(0xFF7b7b7b),
-                      ),
-                    ),
-                  ],
-                ),
-                const Spacer(),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                  child: Text('x $quantity',
-                      style: GoogleFonts.montserrat(
-                        fontSize: 16,
-                        fontStyle: FontStyle.normal,
-                        fontWeight: FontWeight.w400,
-                        color: const Color(0xFF7b7b7b),
-                      )),
+                Text(
+                  '\$${widget.item.price.toStringAsFixed(2)}',
+                  textAlign: TextAlign.left,
+                  style: GoogleFonts.montserrat(
+                    fontSize: 12,
+                    fontStyle: FontStyle.normal,
+                    fontWeight: FontWeight.w400,
+                    color: const Color(0xFF7b7b7b),
+                  ),
                 ),
               ],
             ),
-            // const Padding(
-            //   padding: EdgeInsets.symmetric(vertical: 8.0),
-            //   child: DottedLine(dashColor: Color(0xFF7b7b7b), dashLength: 5),
-            // ),
+            const Spacer(),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              child: Text('x $quantity',
+                  style: GoogleFonts.montserrat(
+                    fontSize: 16,
+                    fontStyle: FontStyle.normal,
+                    fontWeight: FontWeight.w400,
+                    color: const Color(0xFF7b7b7b),
+                  )),
+            ),
           ],
         ),
-      ),
     );
   }
 }

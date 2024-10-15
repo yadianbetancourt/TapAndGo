@@ -6,6 +6,7 @@ import 'package:material_symbols_icons/symbols.dart';
 import 'package:provider/provider.dart';
 import 'package:tap_and_go/components/list_tile_item_terminal.dart';
 import 'package:tap_and_go/screens/payment_screen.dart';
+import 'package:tap_and_go/screens/tips_screen.dart';
 
 
 import '../models/item.dart';
@@ -191,7 +192,10 @@ class TerminalScreenState extends State<TerminalScreen> {
                     ),
                     const Spacer(),
                     IconButton(
-                        onPressed: () {},
+                        onPressed: () => showDialog<String>(
+                            context: context,
+                            builder: (BuildContext context) => const TipsScreen()
+                        ),
                         style: ButtonStyle(
                           backgroundColor: WidgetStateProperty.all<Color>(const Color(0xFFf2f4f7)),
                           shape: WidgetStateProperty.all<RoundedRectangleBorder>(
@@ -221,22 +225,12 @@ class TerminalScreenState extends State<TerminalScreen> {
               Lottie.asset('assets/lottie/hey.json', height: 300)
             else
               Expanded(
-                child: SingleChildScrollView(
-                  scrollDirection: Axis.vertical,
-                  child: Column(
-                    children: [
-                      SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.6,
-                        child: ListView.builder(
-                          itemCount: testedItems.length,
-                          itemBuilder: (context, index) {
-                            return ListTileItemComponent(
-                                item: testedItems[index]);
-                          },
-                        ),
-                      ),
-                    ],
-                  ),
+                child: ListView.builder(
+                  itemCount: testedItems.length,
+                  itemBuilder: (context, index) {
+                    return ListTileItemComponent(
+                        item: testedItems[index]);
+                  },
                 ),
               ),
           ],

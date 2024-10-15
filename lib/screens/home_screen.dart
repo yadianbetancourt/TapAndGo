@@ -20,7 +20,6 @@ class HomeScreen extends StatefulWidget {
 
 class HomeScreenState extends State<HomeScreen> {
   final List<Item> items = [
-    // Mixed items
     Item(
         name: "Buttermilk Croissant",
         category: "Breakfast",
@@ -51,84 +50,151 @@ class HomeScreenState extends State<HomeScreen> {
         category: "Lunch",
         price: 7.50,
         imagePath: "assets/images/Grilled Chicken Wrap.png"),
-
-    // Breakfast items
     Item(
         name: "Egg and Cheese Muffin",
         category: "Breakfast",
         price: 3.75,
-        imagePath: "assets/images/placeholder.png"),
-    Item(
-        name: "Pancake Stack",
-        category: "Breakfast",
-        price: 5.00,
-        imagePath: "assets/images/placeholder.png"),
-    Item(
-        name: "Avocado Toast",
-        category: "Breakfast",
-        price: 6.25,
-        imagePath: "assets/images/placeholder.png"),
-
-    // Lunch items
+        imagePath: "assets/images/Egg and Cheese Muffin.png"),
     Item(
         name: "Caesar Salad",
         category: "Lunch",
         price: 6.00,
-        imagePath: "assets/images/placeholder.png"),
+        imagePath: "assets/images/Caesar Salad.png"),
     Item(
         name: "Beef Burger",
         category: "Lunch",
         price: 9.25,
-        imagePath: "assets/images/placeholder.png"),
-    Item(
-        name: "Fish Tacos",
-        category: "Lunch",
-        price: 8.00,
-        imagePath: "assets/images/placeholder.png"),
-
-    // Dinner items
+        imagePath: "assets/images/Beef Burger.png"),
     Item(
         name: "Steak Frites",
         category: "Dinner",
         price: 18.75,
-        imagePath: "assets/images/placeholder.png"),
-    Item(
-        name: "Pasta Carbonara",
-        category: "Dinner",
-        price: 14.50,
-        imagePath: "assets/images/placeholder.png"),
-    Item(
-        name: "Chicken Alfredo",
-        category: "Dinner",
-        price: 13.50,
-        imagePath: "assets/images/placeholder.png"),
-    Item(
-        name: "Lamb Chops",
-        category: "Dinner",
-        price: 19.00,
-        imagePath: "assets/images/placeholder.png"),
-
-    // Dessert items
+        imagePath: "assets/images/Steak Frites.png"),
     Item(
         name: "Chocolate Lava Cake",
         category: "Dessert",
         price: 5.00,
-        imagePath: "assets/images/placeholder.png"),
+        imagePath: "assets/images/Chocolate Lava Cake.png"),
+    Item(
+        name: "Pancake Stack",
+        category: "Breakfast",
+        price: 5.00,
+        imagePath: "assets/images/Pancake Stack.png"),
+    Item(
+        name: "Pasta Carbonara",
+        category: "Dinner",
+        price: 14.50,
+        imagePath: "assets/images/Pasta Carbonara.png"),
+    Item(
+        name: "Chicken Alfredo",
+        category: "Dinner",
+        price: 13.50,
+        imagePath: "assets/images/Chicken Alfredo.png"),
     Item(
         name: "Egg Tart",
         category: "Dessert",
         price: 3.25,
-        imagePath: "assets/images/placeholder.png"),
+        imagePath: "assets/images/Egg Tart.png"),
+    Item(
+        name: "Avocado Toast",
+        category: "Breakfast",
+        price: 6.25,
+        imagePath: "assets/images/Avocado Toast.png"),
+    Item(
+        name: "Fish Tacos",
+        category: "Lunch",
+        price: 8.00,
+        imagePath: "assets/images/Fish Tacos.png"),
+    Item(
+        name: "Lamb Chops",
+        category: "Dinner",
+        price: 19.00,
+        imagePath: "assets/images/Lamb Chops.png"),
     Item(
         name: "Macaron Selection",
         category: "Dessert",
         price: 4.50,
-        imagePath: "assets/images/placeholder.png"),
+        imagePath: "assets/images/Macaron Selection.png"),
     Item(
         name: "Fruit Tart",
         category: "Dessert",
         price: 4.00,
-        imagePath: "assets/images/placeholder.png"),
+        imagePath: "assets/images/Fruit Tart.png"),
+    Item(
+      name: "Oatmeal",
+      category: "Breakfast",
+      price: 3.00,
+      imagePath: "assets/images/Oatmeal.png",
+    ),
+    Item(
+      name: "Grilled Cheese",
+      category: "Lunch",
+      price: 6.00,
+      imagePath: "assets/images/Grilled Cheese.png",
+    ),
+    Item(
+      name: "Chicken Sandwich",
+      category: "Lunch",
+      price: 8.00,
+      imagePath: "assets/images/Chicken Sandwich.png",
+    ),
+    Item(
+      name: "Turkey Wrap",
+      category: "Lunch",
+      price: 8.50,
+      imagePath: "assets/images/Turkey Wrap.png",
+    ),
+
+
+    // Without Image
+    Item(
+      name: "Vegetable Soup",
+      category: "Lunch",
+      price: 5.00,
+      imagePath: "assets/images/placeholder.png",
+    ),
+    Item(
+      name: "Salmon",
+      category: "Dinner",
+      price: 14.00,
+      imagePath: "assets/images/placeholder.png",
+    ),
+    Item(
+      name: "Spaghetti",
+      category: "Dinner",
+      price: 10.00,
+      imagePath: "assets/images/placeholder.png",
+    ),
+    Item(
+      name: "Chicken Alfredo",
+      category: "Dinner",
+      price: 12.00,
+      imagePath: "assets/images/placeholder.png",
+    ),
+    Item(
+      name: "Beef Tacos",
+      category: "Dinner",
+      price: 9.00,
+      imagePath: "assets/images/placeholder.png",
+    ),
+    Item(
+      name: "Ice Cream Sundae",
+      category: "Dessert",
+      price: 3.50,
+      imagePath: "assets/images/placeholder.png",
+    ),
+    Item(
+      name: "Apple Pie",
+      category: "Dessert",
+      price: 4.50,
+      imagePath: "assets/images/placeholder.png",
+    ),
+    Item(
+      name: "Cheesecake",
+      category: "Dessert",
+      price: 6.00,
+      imagePath: "assets/images/placeholder.png",
+    ),
   ];
   bool showFilters = false;
 

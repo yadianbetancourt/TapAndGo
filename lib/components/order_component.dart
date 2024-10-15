@@ -291,13 +291,16 @@ class OrderComponentState extends State<OrderComponent> {
               child: Column(
                 children: [
                   if (cartProvider.itemsInCart.isEmpty)
-                    Text(
-                      'No items in order',
-                      style: GoogleFonts.montserrat(
-                        fontSize: 16,
-                        fontStyle: FontStyle.normal,
-                        fontWeight: FontWeight.w400,
-                        color: const Color(0xFF7b7b7b),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 20.0),
+                      child: Text(
+                        'No items in order',
+                        style: GoogleFonts.montserrat(
+                          fontSize: 16,
+                          fontStyle: FontStyle.normal,
+                          fontWeight: FontWeight.w400,
+                          color: const Color(0xFF7b7b7b),
+                        ),
                       ),
                     )
                   else
