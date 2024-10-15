@@ -2,20 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class NumberContainerComponent extends StatelessWidget {
-  const NumberContainerComponent(
-      {super.key,
-      required this.iconButton,
-      required this.colorButton,
-      required this.title,
-      required this.number,
-      required this.iconStats,
-      required this.colorStats,
-      required this.percentage});
+  const NumberContainerComponent({
+    super.key,
+    required this.icon,
+    required this.iconColor,
+    required this.bgColor,
+    required this.title,
+    required this.numbers,
+    required this.iconStats,
+    required this.colorStats,
+    required this.percentage,
+  });
 
-  final IconData iconButton;
-  final Color colorButton;
+  final IconData icon;
+  final Color iconColor;
+  final Color bgColor;
   final String title;
-  final int number;
+  final int numbers;
   final IconData iconStats;
   final Color colorStats;
   final String percentage;
@@ -23,45 +26,46 @@ class NumberContainerComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 200,
-      height: 100,
+      width: MediaQuery.of(context).size.width / 4 - 20,
+
       padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: const Color(0xFFFFFFFF),
         border: Border.all(
-          color: const Color(0xFF7b7b7b),
+          color: const Color(0xFFcccccc),
         ),
         borderRadius: BorderRadius.circular(5),
       ),
       child: Stack(
         children: [
           Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
                   title,
                   style: GoogleFonts.montserrat(
-                    fontSize: 12,
+                    fontSize: 16,
                     fontStyle: FontStyle.normal,
-                    fontWeight: FontWeight.w700,
+                    fontWeight: FontWeight.w500,
                     color: const Color(0xFF7b7b7b),
                   ),
                 ),
               ),
+              const SizedBox(height: 10),
               Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  number.toString(),
+                  numbers.toString(),
                   style: GoogleFonts.montserrat(
-                    fontSize: 20,
+                    fontSize: 30,
                     fontStyle: FontStyle.normal,
-                    fontWeight: FontWeight.w700,
+                    fontWeight: FontWeight.w600,
                     color: const Color(0xFF000000),
                   ),
                 ),
               ),
+              const SizedBox(height: 10),
               Row(
                 children: [
                   Icon(
@@ -69,6 +73,7 @@ class NumberContainerComponent extends StatelessWidget {
                     size: 20,
                     color: colorStats,
                   ),
+                  const SizedBox(width: 5),
                   Text(
                     '10% then yesterday',
                     style: GoogleFonts.montserrat(
@@ -90,10 +95,10 @@ class NumberContainerComponent extends StatelessWidget {
                   style: ButtonStyle(
                       shape: WidgetStateProperty.all<RoundedRectangleBorder>(
                           RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10))),
+                              borderRadius: BorderRadius.circular(5))),
                       backgroundColor: WidgetStateProperty.all<Color>(
-                          const Color(0x1a3561a8))),
-                  icon: Icon(iconButton, color: colorButton, size: 20))),
+                          bgColor)),
+                  icon: Icon(icon, color: iconColor, size: 20))),
         ],
       ),
     );
